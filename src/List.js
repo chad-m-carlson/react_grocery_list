@@ -1,5 +1,6 @@
 import React from 'react';
-import { groupPatternsByBaseDirectory } from 'fast-glob/out/managers/tasks';
+import Grocery from './Grocery';
+
 
 // const List = (props) => (
 //   <div>
@@ -11,11 +12,13 @@ import { groupPatternsByBaseDirectory } from 'fast-glob/out/managers/tasks';
 // );
 //DESTRUCTURE THE PROPS, REMOVE ALL TRACES OF props. FROM HTML {}
 
-  const List = ({groceries, name}) => (
+  const List = ({groceries, name, groceryClick}) => (
     <div>
       <h2>{name}</h2>
       <ul>
-        {groceries.map( grocery => <li key={grocery.id}>{grocery.name}</li>)}
+        { groceries.map( grocery => <Grocery key={grocery.id}{...grocery} groceryClick={groceryClick}/>)}
+        {/* THE HARD, EASY TO READ WAY BELOW */}
+        {/* { groceries.map( grocery => <Grocery key={grocery.id} id={grocery.id} name={grocery.name} purhcased={grocery.purchased})} */}
       </ul>
     </div>
   );

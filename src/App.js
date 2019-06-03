@@ -1,15 +1,29 @@
 import React, {Component} from 'react';
 import './App.css';
 import List from './List';
+import AddGroceries from './AddGroceries'
+import Footer from './Footer'
 
 class App extends Component {
-  state = {
-    groceries: [
-      {id: 1, name: "Bananas", complete: false,},
-      {id: 2, name: "Cottage Cheese", complete: false,},
-      {id: 3, name: "Apples", complete: false,},
-      {id: 4, name: "oranges", complete: true,},
-    ]
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      groceries: [
+        {id: 1, name: "Bananas", purchased: false,},
+        {id: 2, name: "Cottage Cheese", purchased: false,},
+        {id: 3, name: "Apples", purchased: false,},
+        {id: 4, name: "oranges", purchased: true,},
+      ],
+      filter: "All",
+    };
+
+    
+    this.addGrocery = this.addGrocery.bind(this);
+  };
+  
+  setFilter = (filter) => {
+    this.setState({filter})
   };
 
   // renderGroceries = () => {
@@ -18,12 +32,57 @@ class App extends Component {
   //     <li key={grocery.id}>{grocery.name}</li>)
   // };
 
+  getID = () => {
+    return Math.floor((1 + Math.random()) *0X10000)
+      .toString(16)
+      .substring(1);
+  };
+
+  addGrocery(name) {
+    const { groceries } = this.state;
+    const grocery = {name, id:this.getID(), complete: false};
+    this.setState({ groceries: [grocery, ...groceries]});
+  }
+
+  groceryClick = (id) => {
+    const {groceries} = this.state;
+    this.setState({
+      groceries: groceries.map(grocery => {
+        if (grocery.id === id) {
+          return {
+            ...grocery,
+            purchased: !grocery.purchased
+          }
+        }
+        return grocery
+      })
+    })
+  }
+
+  visibleItems = () => {
+    const {groceries, filter } = this.state;
+    switch(filter) {
+      case 'Active':
+        return groceries.filter( g => !g.purchased)
+      case 'Complete':
+        return groceries.filter( t => t.purchased)
+      default:
+        return groceries;
+    }
+  }
+
   render(){
     // GET THE GROCERIES OBJECT FROM THE STATE
-    const {groceries} = this.state
+    const {groceries, filter} = this.state
+
+
     return (
-      <List name="Grocery List" groceries={groceries}></List>
-      //THE NAME AND GROCEREIS ARE PROPS THAT WE ACCESS IN THE LIST.JS COMPONENT
+      <div>
+        <List name="Grocery List" groceries={this.visibleItems()} groceryClick={this.groceryClick}></List>
+        {/* THE NAME AND GROCEREIS ARE PROPS THAT WE ACCESS IN THE LIST.JS COMPONENT */}
+        <AddGroceries addGrocery = {this.addGrocery} />
+        <Footer filter={filter} setFilter={this.setFilter} />
+      </div>
     )
   }
 }
