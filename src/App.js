@@ -10,10 +10,10 @@ class App extends Component {
 
     this.state = {
       groceries: [
-        {id: 1, name: "Bananas", purchased: false,},
-        {id: 2, name: "Cottage Cheese", purchased: false,},
-        {id: 3, name: "Apples", purchased: false,},
-        {id: 4, name: "oranges", purchased: true,},
+        {id: 1, name: "Bananas", quantity: 6, purchased: false,},
+        {id: 2, name: "Cottage Cheese", quantity: 1, purchased: false,},
+        {id: 3, name: "Apples", quantity: 6, purchased: false,},
+        {id: 4, name: "oranges", quantity: 6, purchased: true,},
       ],
       filter: "All",
     };
@@ -38,9 +38,9 @@ class App extends Component {
       .substring(1);
   };
 
-  addGrocery(name) {
+  addGrocery(name, quantity) {
     const { groceries } = this.state;
-    const grocery = {name, id:this.getID(), complete: false};
+    const grocery = {name, id:this.getID(), quantity, purchased: false};
     this.setState({ groceries: [grocery, ...groceries]});
   }
 
@@ -64,7 +64,7 @@ class App extends Component {
     switch(filter) {
       case 'Active':
         return groceries.filter( g => !g.purchased)
-      case 'Complete':
+      case 'Purchased':
         return groceries.filter( t => t.purchased)
       default:
         return groceries;
@@ -73,7 +73,7 @@ class App extends Component {
 
   render(){
     // GET THE GROCERIES OBJECT FROM THE STATE
-    const {groceries, filter} = this.state
+    const {filter} = this.state
 
 
     return (

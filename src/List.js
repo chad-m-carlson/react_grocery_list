@@ -15,7 +15,7 @@ import Grocery from './Grocery';
   const List = ({groceries, name, groceryClick}) => (
     <div>
       <h2>{name}</h2>
-      <ul>
+      <ul className="ui list">
         { groceries.map( grocery => <Grocery key={grocery.id}{...grocery} groceryClick={groceryClick}/>)}
         {/* THE HARD, EASY TO READ WAY BELOW */}
         {/* { groceries.map( grocery => <Grocery key={grocery.id} id={grocery.id} name={grocery.name} purhcased={grocery.purchased})} */}
