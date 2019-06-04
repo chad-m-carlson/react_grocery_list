@@ -24,24 +24,28 @@ class AddGroceries extends React.Component {
     // DESTRUCTURING THE STATE OBJECT
     const { name, quantity } = this.state;
     return(
-      <form onSubmit={this.handleSubmit}>
-        <input
-          value={name}
-          name="name"
-          onChange={this.handleChange}
-          required
-          placeholder="Add Groceries"
-          ></input>
-        <input
-          value={quantity}
-          name="quantity"
-          onChange={this.handleChange}
-          required
-          placeholder="Quantity"
-          >
-        </input>
-        <button type="submit">Add To Grocery List</button>
-      </form>
+      <div className="ui form">
+        <form onSubmit={this.handleSubmit}>
+          <input
+            value={name}
+            name="name"
+            onChange={this.handleChange}
+            required
+            placeholder="Add Groceries"
+            className="field"
+            ></input>
+          <input
+            value={quantity}
+            name="quantity"
+            onChange={this.handleChange}
+            required
+            placeholder="Quantity"
+            className="field"
+            >
+          </input>
+          <button type="submit" className="ui button green inverted">Add To Grocery List</button>
+        </form>
+      </div>
     );
   }
 };
