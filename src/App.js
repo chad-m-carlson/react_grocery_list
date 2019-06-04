@@ -59,6 +59,17 @@ class App extends Component {
     })
   }
 
+  deleteGrocery = (id) => {
+    const {groceries} = this.state;
+    this.setState({
+      groceries: groceries.map((grocery, i) => {
+        if (grocery.id === id) {
+          groceries.splice(i, 1)
+        }
+      })
+    })
+  }
+
   visibleItems = () => {
     const {groceries, filter } = this.state;
     switch(filter) {
@@ -78,7 +89,7 @@ class App extends Component {
 
     return (
       <div>
-        <List name="Grocery List" groceries={this.visibleItems()} groceryClick={this.groceryClick}></List>
+        <List name="Grocery List" groceries={this.visibleItems()} deleteGrocery={this.deleteGrocery} groceryClick={this.groceryClick}></List>
         {/* THE NAME AND GROCEREIS ARE PROPS THAT WE ACCESS IN THE LIST.JS COMPONENT */}
         <AddGroceries addGrocery = {this.addGrocery} />
         <Footer filter={filter} setFilter={this.setFilter} />
